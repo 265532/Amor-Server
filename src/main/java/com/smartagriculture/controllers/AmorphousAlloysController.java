@@ -7,11 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/amorphous_alloys")
@@ -48,6 +47,34 @@ public class AmorphousAlloysController {
             // 异常处理
             logger.error("获取非晶合金信息时发生异常: {}", e.getMessage(), e);
             return ApiResponse.error("服务器内部错误");
+        }
+    }
+
+    @GetMapping("/all")
+    public ApiResponse<List<AmorphousAlloys>> getAllAmorphousAlloys() {
+        try {
+            List<AmorphousAlloys> result = amorphousAlloysService.findAll();
+            if (result.isEmpty()) {
+                logger.warn("未找到任何非晶合金");
+                return ApiResponse.error("未找到任何非晶合金");
+            }
+
+            logger.info("成功获取所有非晶合金信息");
+            return ApiResponse.success("非晶合金获取成功", result);
+        }catch (Exception e) {
+            // 异常处理
+            logger.error("获取非晶合金信息时发生异常: {}", e.getMessage(), e);
+            return ApiResponse.error("服务器内部错误");
+        }
+    }
+
+    @PostMapping
+    public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@RequestBody AmorphousAlloys amorphousAlloys) {
+        try {
+
+        }
+        catch (Exception e) {
+
         }
     }
 }
