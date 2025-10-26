@@ -1,9 +1,9 @@
-package com.smartagriculture.model;
+package com.smartagriculture.model.amorphous.alloys;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.smartagriculture.converter.PropertiesConverter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,24 +19,24 @@ public class AmorphousAlloys {
     @Column(name = "version", length = 128)
     private String version;
 
-    @Column(name = "base_type_id")
-    private Integer baseTypeId;
+    @JsonProperty("base_type_id")
+    @Column(name = "base_type_id", nullable = false)
+    private int baseTypeId;
 
     @Column(name = "formula", length = 255)
     private String formula;
 
-    // JSON 字符串存储，使用 TEXT 以容纳较大属性集
-    @Column(name = "properties", columnDefinition = "TEXT")
-    private String properties;
+    @Convert(converter = PropertiesConverter.class)
+    @Column(name = "properties", nullable = false, columnDefinition = "JSON")
+    private Properties properties;
 
+    @JsonProperty("created_at")
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @JsonProperty("updated_at")
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public AmorphousAlloys() {
-    }
 
     public String getId() {
         return id;
@@ -62,11 +62,11 @@ public class AmorphousAlloys {
         this.version = version;
     }
 
-    public Integer getBaseTypeId() {
+    public int getBaseTypeId() {
         return baseTypeId;
     }
 
-    public void setBaseTypeId(Integer baseTypeId) {
+    public void setBaseTypeId(int baseTypeId) {
         this.baseTypeId = baseTypeId;
     }
 
@@ -78,11 +78,11 @@ public class AmorphousAlloys {
         this.formula = formula;
     }
 
-    public String getProperties() {
+    public Properties getProperties() {
         return properties;
     }
 
-    public void setProperties(String properties) {
+    public void setProperties(Properties properties) {
         this.properties = properties;
     }
 

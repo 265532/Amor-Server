@@ -1,4 +1,4 @@
-package com.smartagriculture.model;
+package com.smartagriculture.model.amorphous.alloys;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,16 +1,14 @@
 package com.smartagriculture.utils;
 
-import org.springframework.http.HttpStatus;
-
 public class ApiResponse<T> {
-    private final int status;
-    private final String message;
-    private final T data;
+    private int status;
+    private String message;
+    private T data;
 
     private ApiResponse(int status, String message, T data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
+        setStatus(status);
+        setMessage(message);
+        setData(data);
     }
 
     // 成功响应（带数据）
@@ -37,4 +35,16 @@ public class ApiResponse<T> {
     public int getStatus() { return status; }
     public String getMessage() { return message; }
     public T getData() { return data; }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

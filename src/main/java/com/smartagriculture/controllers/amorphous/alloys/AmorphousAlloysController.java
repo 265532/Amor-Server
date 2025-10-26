@@ -1,14 +1,12 @@
-package com.smartagriculture.controllers;
+package com.smartagriculture.controllers.amorphous.alloys;
 
+import com.smartagriculture.model.amorphous.alloys.AmorphousAlloys;
+import com.smartagriculture.services.amorphous.alloysService.AmorphousAlloysService;
 import com.smartagriculture.utils.ApiResponse;
-import com.smartagriculture.model.AmorphousAlloys;
-import com.smartagriculture.services.AmorphousAlloysService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -68,13 +66,41 @@ public class AmorphousAlloysController {
         }
     }
 
-    @PostMapping
-    public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@RequestBody AmorphousAlloys amorphousAlloys) {
+    @PostMapping("/create")
+    public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@RequestBody AmorphousAlloys body) {
+        if(body == null || body.getProperties() == null) return ApiResponse.error("非晶合金信息不能为空");
+        System.out.println("getBaseTypeId--------->"+body.getBaseTypeId());
         try {
-
+            AmorphousAlloys result = amorphousAlloysService.create(body);
+            logger.info("成功创建非晶合金信息");
+            return ApiResponse.success("非晶合金创建成功", body);
         }
         catch (Exception e) {
-
+            logger.warn("创建非晶合金信息失败: {}", e.getMessage(), e);
+            return ApiResponse.error("服务器内部错误");
         }
     }
+
+    @PutMapping("/update")
+    public ApiResponse<AmorphousAlloys> updateAmorphousAlloy(@RequestBody AmorphousAlloys body) {
+        if (body == null || body.getId() == null) {
+            logger.warn("更新参数为空");
+            return ApiResponse.error("更新参数不能为空");
+        }
+
+        try {
+            AmorphousAlloys result = amorphousAlloysService.updateById(body);
+            if (result == null) {
+                logger.warn("未找到ID为 {} 的非晶合金", body.getId());
+                return ApiResponse.error("非晶合金未找到");
+            }
+
+            logger.info("成功更新ID为 {} 的非晶合金信息", body.getId());
+            return ApiResponse.success("非晶合金更新成功", result);
+        } catch (Exception e) {
+            logger.error("更新非晶合金信息时发生异常: {}", e.getMessage(), e);
+            return ApiResponse.error("服务器内部错误");
+        }
+    }
+
 }
