@@ -80,6 +80,17 @@ public class AmorphousAlloysController {
         }
     }
 
+    @PostMapping("/create/test")
+    public void testAmorphousAlloy() {
+        AmorphousAlloys[] amorphousAlloysArr = {
+        };
+        for (int i = 0; i < amorphousAlloysArr.length; i++) {
+            AmorphousAlloys body = new AmorphousAlloys();
+            body.setId(amorphousAlloysArr[i].getId());
+            AmorphousAlloys result = amorphousAlloysService.create(body);
+        }
+    }
+
     @PutMapping("/update")
     public ApiResponse<AmorphousAlloys> updateAmorphousAlloy(@RequestBody AmorphousAlloys body) {
         if (body == null || body.getId() == null) {
@@ -102,4 +113,20 @@ public class AmorphousAlloysController {
         }
     }
 
+}
+
+class AmorphousAlloysData {
+    String name;
+    String formula;
+    int strength;
+    int hardness;
+    int corrosion_resistance;
+
+    public AmorphousAlloysData(String name, String formula, int strength, int hardness, int corrosion_resistance) {
+        this.name = name;
+        this.formula = formula;
+        this.strength = strength;
+        this.hardness = hardness;
+        this.corrosion_resistance = corrosion_resistance;
+    }
 }
