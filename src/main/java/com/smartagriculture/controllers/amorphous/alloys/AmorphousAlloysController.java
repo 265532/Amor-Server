@@ -59,7 +59,7 @@ public class AmorphousAlloysController {
 
             logger.info("成功获取所有非晶合金信息");
             return ApiResponse.success("非晶合金获取成功", result);
-        }catch (Exception e) {
+        } catch (Exception e) {
             // 异常处理
             logger.error("获取非晶合金信息时发生异常: {}", e.getMessage(), e);
             return ApiResponse.error("服务器内部错误");
@@ -68,16 +68,15 @@ public class AmorphousAlloysController {
 
     @PostMapping("/create")
     public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@RequestBody AmorphousAlloys body) {
-        if(body == null || body.getProperties() == null) return ApiResponse.error("非晶合金信息不能为空");
-        System.out.println("getBaseTypeId--------->"+body.getBaseTypeId());
+        if (body == null || body.getProperties() == null) return ApiResponse.error("非晶合金信息不能为空");
+        System.out.println("getBaseTypeId--------->" + body.getBaseTypeId());
         try {
             AmorphousAlloys result = amorphousAlloysService.create(body);
             logger.info("成功创建非晶合金信息");
             return ApiResponse.success("非晶合金创建成功", body);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.warn("创建非晶合金信息失败: {}", e.getMessage(), e);
-            return ApiResponse.error("服务器内部错误");
+            return ApiResponse.error(e.getMessage());
         }
     }
 

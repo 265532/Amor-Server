@@ -33,6 +33,10 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     public AmorphousAlloys create(AmorphousAlloys amorphousAlloys) {
         // 验证基体类型是否存在
         int baseTypeId = amorphousAlloys.getBaseTypeId();
+        String amorphousAlloysID = amorphousAlloys.getId();
+        if(amorphousAlloysID != null && amorphousAlloysRepository.existsById(amorphousAlloysID)){
+            throw new IllegalArgumentException("ID already exists: " + amorphousAlloysID);
+        }
         if (!baseTypesRepository.existsById(baseTypeId)) {
             throw new IllegalArgumentException("无效的基体类型ID: " + baseTypeId);
         }
