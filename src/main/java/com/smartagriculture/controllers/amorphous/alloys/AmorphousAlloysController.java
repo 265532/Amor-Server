@@ -69,7 +69,6 @@ public class AmorphousAlloysController {
     @PostMapping("/create")
     public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@RequestBody AmorphousAlloys body) {
         if (body == null || body.getProperties() == null) return ApiResponse.error("非晶合金信息不能为空");
-        System.out.println("getBaseTypeId--------->" + body.getBaseTypeId());
         try {
             AmorphousAlloys result = amorphousAlloysService.create(body);
             logger.info("成功创建非晶合金信息");
@@ -80,31 +79,18 @@ public class AmorphousAlloysController {
         }
     }
 
-    @PostMapping("/create/test")
-    public void testAmorphousAlloy() {
-        AmorphousAlloys[] amorphousAlloysArr = {
-        };
-        for (int i = 0; i < amorphousAlloysArr.length; i++) {
-            AmorphousAlloys body = new AmorphousAlloys();
-            body.setId(amorphousAlloysArr[i].getId());
-            AmorphousAlloys result = amorphousAlloysService.create(body);
-        }
-    }
-
     @PutMapping("/update")
     public ApiResponse<AmorphousAlloys> updateAmorphousAlloy(@RequestBody AmorphousAlloys body) {
         if (body == null || body.getId() == null) {
             logger.warn("更新参数为空");
             return ApiResponse.error("更新参数不能为空");
         }
-
         try {
             AmorphousAlloys result = amorphousAlloysService.updateById(body);
             if (result == null) {
                 logger.warn("未找到ID为 {} 的非晶合金", body.getId());
                 return ApiResponse.error("非晶合金未找到");
             }
-
             logger.info("成功更新ID为 {} 的非晶合金信息", body.getId());
             return ApiResponse.success("非晶合金更新成功", result);
         } catch (Exception e) {
@@ -113,20 +99,24 @@ public class AmorphousAlloysController {
         }
     }
 
-}
-
-class AmorphousAlloysData {
-    String name;
-    String formula;
-    int strength;
-    int hardness;
-    int corrosion_resistance;
-
-    public AmorphousAlloysData(String name, String formula, int strength, int hardness, int corrosion_resistance) {
-        this.name = name;
-        this.formula = formula;
-        this.strength = strength;
-        this.hardness = hardness;
-        this.corrosion_resistance = corrosion_resistance;
+    @DeleteMapping("/delete")
+    public ApiResponse<Void> deleteAmorphousAlloy(@RequestParam("id") String id) {
+        if (id == null || id.trim().isEmpty()) {
+            logger.warn("删除参数为空");
+            return ApiResponse.error("删除参数不能为空");
+        }
+        if (amorphousAlloysService.getInfoById(id) == null) {
+            logger.warn("未找到ID为 {} 的非晶合金", id);
+            return ApiResponse.error("非晶合金未找到");
+        }
+        try {
+            amorphousAlloysService.deleteById(id);
+            logger.info("成功删除ID为 {} 的非晶合金信息", id);
+            return ApiResponse.success("非晶合金删除成功", null);
+        } catch (Exception e) {
+            logger.error("删除非晶合金信息时发生异常: {}", e.getMessage(), e);
+            return ApiResponse.error("服务器内部错误");
+        }
     }
+
 }
