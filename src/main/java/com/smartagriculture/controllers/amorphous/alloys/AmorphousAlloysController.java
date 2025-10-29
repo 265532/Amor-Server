@@ -1,7 +1,7 @@
 package com.smartagriculture.controllers.amorphous.alloys;
 
-import com.smartagriculture.model.amorphous.alloys.AmorphousAlloys;
-import com.smartagriculture.services.amorphous.alloysService.AmorphousAlloysService;
+import com.smartagriculture.model.AmorphousAlloys;
+import com.smartagriculture.services.AmorphousAlloysService;
 import com.smartagriculture.utils.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
