@@ -1,6 +1,6 @@
-package com.smartagriculture.mapper;
+package com.smartAmor.mapper;
 
-import com.smartagriculture.model.BaseTypes;
+import com.smartAmor.model.BaseTypes;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

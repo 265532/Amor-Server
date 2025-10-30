@@ -1,8 +1,8 @@
-package com.smartagriculture.controllers;
+package com.smartAmor.controllers;
 
-import com.smartagriculture.model.AmorphousAlloys;
-import com.smartagriculture.services.AmorphousAlloysService;
-import com.smartagriculture.utils.ApiResponse;
+import com.smartAmor.model.AmorphousAlloys;
+import com.smartAmor.services.AmorphousAlloysService;
+import com.smartAmor.utils.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

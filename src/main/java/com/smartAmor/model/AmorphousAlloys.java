@@ -1,4 +1,4 @@
-package com.smartagriculture.model;
+package com.smartAmor.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;

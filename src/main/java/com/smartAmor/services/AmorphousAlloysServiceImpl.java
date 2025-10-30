@@ -1,9 +1,9 @@
-package com.smartagriculture.services;
+package com.smartAmor.services;
 
-import com.smartagriculture.mapper.AmorphousAlloysMapper;
-import com.smartagriculture.mapper.BaseTypesMapper;
-import com.smartagriculture.model.AmorphousAlloys;
-import com.smartagriculture.model.Properties;
+import com.smartAmor.mapper.AmorphousAlloysMapper;
+import com.smartAmor.mapper.BaseTypesMapper;
+import com.smartAmor.model.AmorphousAlloys;
+import com.smartAmor.model.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

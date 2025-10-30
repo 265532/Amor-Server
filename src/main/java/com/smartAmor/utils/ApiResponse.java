@@ -1,4 +1,4 @@
-package com.smartagriculture.utils;
+package com.smartAmor.utils;
 
 public class ApiResponse<T> {
     private int status;

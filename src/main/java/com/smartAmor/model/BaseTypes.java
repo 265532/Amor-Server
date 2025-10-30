@@ -1,4 +1,4 @@
-package com.smartagriculture.model;
+package com.smartAmor.model;
 
 import java.time.LocalDateTime;
 

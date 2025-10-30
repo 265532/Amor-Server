@@ -1,6 +1,6 @@
-package com.smartagriculture.services;
+package com.smartAmor.services;
 
-import com.smartagriculture.model.AmorphousAlloys;
+import com.smartAmor.model.AmorphousAlloys;
 
 import java.util.List;
 

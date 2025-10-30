@@ -1,6 +1,6 @@
-package com.smartagriculture.typehandler;
+package com.smartAmor.typehandler;
 
-import com.smartagriculture.model.Properties;
+import com.smartAmor.model.Properties;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;

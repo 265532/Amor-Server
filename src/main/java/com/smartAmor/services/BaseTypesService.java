@@ -1,4 +1,4 @@
-package com.smartagriculture.services;
+package com.smartAmor.services;
 
 public interface BaseTypesService {
 }
