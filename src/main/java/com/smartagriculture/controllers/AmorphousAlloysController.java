@@ -1,4 +1,4 @@
-package com.smartagriculture.controllers.amorphous.alloys;
+package com.smartagriculture.controllers;
 
 import com.smartagriculture.model.AmorphousAlloys;
 import com.smartagriculture.services.AmorphousAlloysService;
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -48,10 +49,16 @@ public class AmorphousAlloysController {
         }
     }
 
-    @GetMapping("/all")
-    public ApiResponse<List<AmorphousAlloys>> getAllAmorphousAlloys() {
+    @GetMapping("/list")
+    public ApiResponse<List<AmorphousAlloys>> getAmorphousAlloysWithPagination(@RequestParam("page") int page, @RequestParam("size") int size) {
+        if (page < 0 || size < 0) {
+            logger.warn("分页参数错误");
+            return ApiResponse.error("分页参数错误");
+        }
+        if (size == 0) size = 10;
+        if (page == 0) page = 1;
         try {
-            List<AmorphousAlloys> result = amorphousAlloysService.findAll();
+            List<AmorphousAlloys> result = amorphousAlloysService.selectInfoWithPagination(page, size);
             if (result.isEmpty()) {
                 logger.warn("未找到任何非晶合金");
                 return ApiResponse.error("未找到任何非晶合金");

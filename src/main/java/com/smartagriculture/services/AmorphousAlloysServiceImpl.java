@@ -27,8 +27,8 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     }
 
     @Override
-    public List<AmorphousAlloys> findAll() {
-        return amorphousAlloysMapper.selectAll();
+    public List<AmorphousAlloys> selectInfoWithPagination(int page, int size) {
+        return amorphousAlloysMapper.selectAllWithPagination(page * size, size);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
         String amorphousAlloysID = amorphousAlloys.getId();
 
         // 检查ID是否已存在
-        if(amorphousAlloysID != null && amorphousAlloysMapper.existsById(amorphousAlloysID)){
+        if (amorphousAlloysID != null && amorphousAlloysMapper.existsById(amorphousAlloysID)) {
             throw new IllegalArgumentException("ID already exists: " + amorphousAlloysID);
         }
 
