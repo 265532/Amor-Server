@@ -27,8 +27,8 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     }
 
     @Override
-    public List<AmorphousAlloys> selectInfoWithPagination(int page, int size) {
-        return amorphousAlloysMapper.selectAllWithPagination(page * size, size);
+    public List<AmorphousAlloys> selectList(int start, int size) {
+        return amorphousAlloysMapper.selectList(start, size);
     }
 
     @Override

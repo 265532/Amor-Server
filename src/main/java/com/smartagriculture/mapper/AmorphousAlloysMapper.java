@@ -36,11 +36,11 @@ public interface AmorphousAlloysMapper {
     })
     List<AmorphousAlloys> selectAll();
 
-    @Select("SELECT * FROM amorphous_alloys LIMIT #{size} OFFSET #{offset}")
+    @Select("SELECT * FROM amorphous_alloys LIMIT #{size} OFFSET #{start}")
     @Results({
             @Result(property = "properties", column = "properties", typeHandler = com.smartagriculture.typehandler.PropertiesTypeHandler.class)
     })
-    List<AmorphousAlloys> selectAllWithPagination(int offset, int size);
+    List<AmorphousAlloys> selectList(int start, int size);
 
 
     @Select("SELECT COUNT(*) > 0 FROM amorphous_alloys WHERE id = #{id}")

@@ -5,7 +5,7 @@ import com.smartagriculture.model.AmorphousAlloys;
 import java.util.List;
 
 public interface AmorphousAlloysService {
-    List<AmorphousAlloys> selectInfoWithPagination(int page, int size);
+    List<AmorphousAlloys> selectList(int page, int size);
 
     AmorphousAlloys getInfoById(String id);
 
