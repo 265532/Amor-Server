@@ -1,4 +1,4 @@
-package com.smartAmor.typehandler;
+package com.smartAmor.typeHandler;
 
 import com.smartAmor.model.Properties;
 import org.apache.ibatis.type.BaseTypeHandler;

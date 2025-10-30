@@ -8,8 +8,13 @@
         version = #{version},
         base_type_id = #{baseTypeId},
         formula = #{formula},
-        properties = #{properties, typeHandler=com.smartAmor.typehandler.PropertiesTypeHandler},
+        properties = #{properties, typeHandler=com.smartAmor.typeHandler.PropertiesTypeHandler},
         updated_at = #{updatedAt}
         WHERE id = #{id}
     </update>
+    <insert id="insert">
+        INSERT INTO amorphous_alloys (id, name, version, base_type_id, formula, properties, created_at, updated_at)
+        VALUES (#{id}, #{name}, #{version}, #{baseTypeId}, #{formula},
+        #{properties, typeHandler=com.smartAmor.typeHandler.PropertiesTypeHandler}, #{createdAt}, #{updatedAt})
+    </insert>
 </mapper>

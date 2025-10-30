@@ -1,7 +1,7 @@
 package com.smartAmor.mapper;
 
 import com.smartAmor.model.AmorphousAlloys;
-import com.smartAmor.typehandler.PropertiesTypeHandler;
+import com.smartAmor.typeHandler.PropertiesTypeHandler;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -14,8 +14,6 @@ public interface AmorphousAlloysMapper {
     })
     AmorphousAlloys selectById(String id);
 
-    @Insert("INSERT INTO amorphous_alloys (id, name, version, base_type_id, formula, properties, created_at, updated_at) " +
-            "VALUES (#{id}, #{name}, #{version}, #{baseTypeId}, #{formula}, #{properties, typeHandler=com.smartAmor.typehandler.PropertiesTypeHandler}, #{createdAt}, #{updatedAt})")
     int insert(AmorphousAlloys entity);
 
     int update(AmorphousAlloys entity);
