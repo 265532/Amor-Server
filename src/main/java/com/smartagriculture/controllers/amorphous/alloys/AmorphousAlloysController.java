@@ -30,15 +30,8 @@ public class AmorphousAlloysController {
                 logger.warn("ID参数为空");
                 return ApiResponse.error("ID不能为空");
             }
-
             // 业务逻辑处理
             AmorphousAlloys result = amorphousAlloysService.getInfoById(id);
-            if (result == null) {
-                logger.warn("未找到ID为 {} 的非晶合金", id);
-                return ApiResponse.error("非晶合金未找到");
-            }
-
-            logger.info("成功获取ID为 {} 的非晶合金信息", id);
             return ApiResponse.success("非晶合金获取成功", result);
 
         } catch (Exception e) {
