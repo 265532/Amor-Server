@@ -1,6 +1,7 @@
 package com.smartAmor.controllers;
 
-import com.smartAmor.model.AmorphousAlloys;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;
 import org.slf4j.Logger;
@@ -30,10 +31,10 @@ public class AmorphousAlloysController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<AmorphousAlloys> getAmorphousAlloyById(
+    public ApiResponse<AmorphousAlloysEntity> getAmorphousAlloyById(
             @PathVariable("id") @NotBlank String id) {
         logger.info("根据ID查询非晶合金: {}", id);
-        AmorphousAlloys result = amorphousAlloysService.getInfoById(id);
+        AmorphousAlloysEntity result = amorphousAlloysService.getInfoById(id);
         if (result == null) {
             return ApiResponse.notFound("非晶合金不存在");
         }
@@ -42,29 +43,32 @@ public class AmorphousAlloysController {
 
 
     @GetMapping("/list")
-    public ApiResponse<List<AmorphousAlloys>> getAmorphousAlloysWithPagination(
-            @RequestParam(name = "page", defaultValue = "0") @PositiveOrZero(message = "页码不能为负数") int page,
-            @RequestParam(name = "size", defaultValue = "10") @Positive(message = "每页大小必须大于0") int size) {
-        logger.info("分页查询非晶合金, page: {}, size: {}", page, size);
-        List<AmorphousAlloys> result = amorphousAlloysService.selectList(page, size);
+    public ApiResponse<Page<AmorphousAlloysEntity>> getAmorphousAlloysWithPagination
+    (
+            @RequestParam(name = "startPage", defaultValue = "0") @PositiveOrZero(message = "页码不能为负数") int startPage,
+            @RequestParam(name = "size", defaultValue = "10") @Positive(message = "每页大小必须大于0") int size
+    )
+    {
+        logger.info("分页查询非晶合金, startPage: {}, size: {}", startPage, size);
+        Page<AmorphousAlloysEntity> result = amorphousAlloysService.selectListByPage(startPage, size);
         return ApiResponse.success("非晶合金列表获取成功", result);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<AmorphousAlloys> createAmorphousAlloy(@Valid @RequestBody AmorphousAlloys body) {
+    public ApiResponse<AmorphousAlloysEntity> createAmorphousAlloy(@Valid @RequestBody AmorphousAlloysEntity body) {
         logger.info("创建非晶合金: {}", body);
-        AmorphousAlloys result = amorphousAlloysService.create(body);
+        AmorphousAlloysEntity result = amorphousAlloysService.create(body);
         return ApiResponse.success("非晶合金创建成功", result);
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<AmorphousAlloys> updateAmorphousAlloy(
+    public ApiResponse<AmorphousAlloysEntity> updateAmorphousAlloy(
             @PathVariable("id") @NotBlank(message = "ID不能为空") String id,
-            @Valid @RequestBody AmorphousAlloys body) {
+            @Valid @RequestBody AmorphousAlloysEntity body) {
         logger.info("更新非晶合金, ID: {}, 数据: {}", id, body);
         body.setId(id); // 确保ID一致性
-        AmorphousAlloys result = amorphousAlloysService.updateById(body);
+        AmorphousAlloysEntity result = amorphousAlloysService.updateById(body);
         return ApiResponse.success("非晶合金更新成功", result);
     }
 
@@ -76,4 +80,16 @@ public class AmorphousAlloysController {
         return ApiResponse.success("非晶合金删除成功", null);
     }
 
+    @GetMapping("/filter")
+    public ApiResponse<List<AmorphousAlloysEntity>> filterAmorphousAlloys(
+            @RequestParam(name = "name",required = false) String name,
+            @RequestParam(name = "hardness", required = false) Double hardness,
+            @RequestParam(name = "strength", required = false) Double strength,
+            @RequestParam(name = "corrosion_resistance", required = false) Double corrosion_resistance) {
+        logger.info("筛选非晶合金, hardness: {}, strength: {}, corrosion_resistance: {}",
+                hardness, strength, corrosion_resistance);
+        List<AmorphousAlloysEntity> result = amorphousAlloysService.filterByPropertiesWithName(
+                name,hardness, strength, corrosion_resistance);
+        return ApiResponse.success("非晶合金筛选成功", result);
+    }
 }

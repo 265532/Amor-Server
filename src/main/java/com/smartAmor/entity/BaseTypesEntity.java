@@ -1,19 +1,19 @@
-package com.smartAmor.model;
+package com.smartAmor.entity;
 
 import java.time.LocalDateTime;
 
-public class BaseTypes {
-    private int id;
+public class BaseTypesEntity {
+    private Integer id;
     private String name;
     private String description;
     private LocalDateTime createdAt; // 改为驼峰命名，符合 Java 规范
 
     // Getter 和 Setter 方法
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

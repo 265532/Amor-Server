@@ -1,9 +1,11 @@
 package com.smartAmor.services;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.mapper.AmorphousAlloysMapper;
 import com.smartAmor.mapper.BaseTypesMapper;
-import com.smartAmor.model.AmorphousAlloys;
-import com.smartAmor.model.Properties;
+import com.smartAmor.entity.AmorphousAlloysEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,6 @@ import java.util.List;
 @Service
 public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
 
-    // 使用 MyBatis Mapper 替代 JPA Repository
     @Autowired
     private AmorphousAlloysMapper amorphousAlloysMapper;
 
@@ -22,21 +23,22 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     private BaseTypesMapper baseTypesMapper;
 
     @Override
-    public AmorphousAlloys getInfoById(String id) {
+    public AmorphousAlloysEntity getInfoById(String id) {
         return amorphousAlloysMapper.selectById(id);
     }
 
     @Override
-    public List<AmorphousAlloys> selectList(int start, int size) {
-        return amorphousAlloysMapper.selectList(start, size);
+    public Page<AmorphousAlloysEntity> selectListByPage(int startPage, int size) {
+        Page<AmorphousAlloysEntity> page = new Page<>(startPage, size);
+        return amorphousAlloysMapper.selectPage(page, null);
     }
 
     @Override
     @Transactional
-    public AmorphousAlloys create(AmorphousAlloys amorphousAlloys) {
+    public AmorphousAlloysEntity create(AmorphousAlloysEntity amorphousAlloysEntity) {
         // 验证基体类型是否存在
-        int baseTypeId = amorphousAlloys.getBaseTypeId();
-        String amorphousAlloysID = amorphousAlloys.getId();
+        int baseTypeId = amorphousAlloysEntity.getBaseTypeId();
+        String amorphousAlloysID = amorphousAlloysEntity.getId();
 
         // 检查ID是否已存在
         if (amorphousAlloysID != null && amorphousAlloysMapper.existsById(amorphousAlloysID)) {
@@ -49,12 +51,12 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
         }
 
         // 验证必填字段
-        if (amorphousAlloys.getProperties() == null) {
-            throw new IllegalArgumentException("Properties cannot be null");
+        if (amorphousAlloysEntity.getProperties() == null) {
+            throw new IllegalArgumentException("PropertiesEntity cannot be null");
         }
 
         // 验证属性值
-        Properties props = amorphousAlloys.getProperties();
+        PropertiesEntity props = amorphousAlloysEntity.getProperties();
         if (props.getHardness() <= 0 ||
                 props.getStrength() <= 0 ||
                 props.getCorrosionResistance() <= 0) {
@@ -63,37 +65,27 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
 
         // 设置时间戳
         LocalDateTime now = LocalDateTime.now();
-        amorphousAlloys.setCreatedAt(now);
-        amorphousAlloys.setUpdatedAt(now);
+        amorphousAlloysEntity.setCreatedAt(now);
+        amorphousAlloysEntity.setUpdatedAt(now);
 
         // 插入数据
-        amorphousAlloysMapper.insert(amorphousAlloys);
+        amorphousAlloysMapper.insert(amorphousAlloysEntity);
 
-        // 返回新创建的对象（可重新查询获取完整数据）
-        return amorphousAlloysMapper.selectById(amorphousAlloys.getId());
+        return amorphousAlloysMapper.selectById(amorphousAlloysEntity.getId());
     }
 
     @Override
     @Transactional
-    public AmorphousAlloys updateById(AmorphousAlloys amorphousAlloys) {
-        String id = amorphousAlloys.getId();
-
-        // 检查记录是否存在
-        AmorphousAlloys existing = amorphousAlloysMapper.selectById(id);
+    public AmorphousAlloysEntity updateById(AmorphousAlloysEntity amorphousAlloysEntity) {
+        String id = amorphousAlloysEntity.getId();
+        AmorphousAlloysEntity existing = amorphousAlloysMapper.selectById(id);
         if (existing == null) {
             throw new IllegalArgumentException("无效的ID: " + id);
         }
 
-        // 保留原始创建时间
-        amorphousAlloys.setCreatedAt(existing.getCreatedAt());
-
-        // 更新修改时间
-        amorphousAlloys.setUpdatedAt(LocalDateTime.now());
-
-        // 执行更新
-        amorphousAlloysMapper.update(amorphousAlloys);
-
-        // 返回更新后的对象
+        amorphousAlloysEntity.setCreatedAt(existing.getCreatedAt());
+        amorphousAlloysEntity.setUpdatedAt(LocalDateTime.now());
+        amorphousAlloysMapper.updateById(amorphousAlloysEntity);
         return amorphousAlloysMapper.selectById(id);
     }
 
@@ -106,11 +98,19 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
         }
 
         // 执行删除
-        amorphousAlloysMapper.delete(id);
+        amorphousAlloysMapper.deleteById(id);
     }
 
     @Override
     public int getCount() {
         return amorphousAlloysMapper.getCount();
+    }
+
+    @Override
+    public List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, Double hardness, Double strength, Double corrosionResistance) {
+        return amorphousAlloysMapper.selectByPropertiesWithName(
+                StringUtils.isNotBlank(name) ? name + "%" : null,
+                hardness, strength, corrosionResistance
+        );
     }
 }

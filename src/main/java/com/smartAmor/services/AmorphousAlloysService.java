@@ -1,19 +1,22 @@
 package com.smartAmor.services;
 
-import com.smartAmor.model.AmorphousAlloys;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smartAmor.entity.AmorphousAlloysEntity;
 
 import java.util.List;
 
 public interface AmorphousAlloysService {
-    List<AmorphousAlloys> selectList(int page, int size);
+    Page<AmorphousAlloysEntity> selectListByPage(int startPage, int size);
 
-    AmorphousAlloys getInfoById(String id);
+    AmorphousAlloysEntity getInfoById(String id);
 
-    AmorphousAlloys create(AmorphousAlloys amorphousAlloys);
+    AmorphousAlloysEntity create(AmorphousAlloysEntity amorphousAlloysEntity);
 
-    AmorphousAlloys updateById(AmorphousAlloys amorphousAlloys);
+    AmorphousAlloysEntity updateById(AmorphousAlloysEntity amorphousAlloysEntity);
 
     void deleteById(String id);
 
     int getCount();
+
+    List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, Double hardness, Double strength, Double corrosionResistance);
 }

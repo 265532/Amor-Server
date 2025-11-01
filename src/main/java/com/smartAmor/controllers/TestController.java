@@ -1,7 +1,7 @@
 package com.smartAmor.controllers;
 
-import com.smartAmor.model.AmorphousAlloys;
-import com.smartAmor.model.Properties;
+import com.smartAmor.entity.AmorphousAlloysEntity;
+import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.services.AmorphousAlloysService;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -36,13 +36,13 @@ public class TestController {
         int count = amorphousAlloysService.getCount();
         for (int i = 0; i < materials.size(); i++) {
             TestController.MaterialData data = materials.get(i);
-            AmorphousAlloys body = new AmorphousAlloys();
+            AmorphousAlloysEntity body = new AmorphousAlloysEntity();
             body.setId("AMA-" + String.format("%03d", (count + i) + 1));
             body.setBaseTypeId(5);
             body.setName("钯基非晶" + names[(int) (Math.random() * names.length)] + "合金");
             body.setVersion(versions[(int) (Math.random() * versions.length)] + "版 v" + String.format("%.1f", (Math.random() * 5 + 1)));
             body.setFormula(data.getFormula());
-            body.setProperties(new Properties(data.getHardness(), data.getStrength(), data.getCorrosion_resistance()));
+            body.setProperties(new PropertiesEntity(data.getHardness(), data.getStrength(), data.getCorrosion_resistance()));
             amorphousAlloysService.create(body);
         }
     }
