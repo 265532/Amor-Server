@@ -1,6 +1,7 @@
 package com.smartAmor.controllers;
 
 import com.smartAmor.model.AmorphousAlloys;
+import com.smartAmor.model.Properties;
 import com.smartAmor.services.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/amorphous_alloys")
@@ -124,5 +126,6 @@ public class AmorphousAlloysController {
             return ApiResponse.error("服务器内部错误");
         }
     }
+
 
 }

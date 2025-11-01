@@ -108,4 +108,9 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
         // 执行删除
         amorphousAlloysMapper.delete(id);
     }
+
+    @Override
+    public int getCount() {
+        return amorphousAlloysMapper.getCount();
+    }
 }

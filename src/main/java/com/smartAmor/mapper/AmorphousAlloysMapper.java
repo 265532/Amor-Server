@@ -32,4 +32,7 @@ public interface AmorphousAlloysMapper {
 
     @Select("SELECT COUNT(*) > 0 FROM amorphous_alloys WHERE id = #{id}")
     boolean existsById(String id);
+
+    @Select("SELECT COUNT(*) FROM amorphous_alloys")
+    int getCount();
 }

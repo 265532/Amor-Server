@@ -3,6 +3,7 @@ package com.smartAmor.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class Properties implements Serializable {
@@ -12,7 +13,14 @@ public class Properties implements Serializable {
     private double corrosionResistance;
 
     // 必须有无参构造函数
-    public Properties() {}
+    public Properties() {
+    }
+
+    public Properties(double hardness, double strength, double corrosionResistance) {
+        this.hardness = hardness;
+        this.strength = strength;
+        this.corrosionResistance = corrosionResistance;
+    }
 
     // getters and setters
     public double getHardness() {

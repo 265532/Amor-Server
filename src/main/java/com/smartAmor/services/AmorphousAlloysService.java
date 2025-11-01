@@ -15,4 +15,5 @@ public interface AmorphousAlloysService {
 
     void deleteById(String id);
 
+    int getCount();
 }
