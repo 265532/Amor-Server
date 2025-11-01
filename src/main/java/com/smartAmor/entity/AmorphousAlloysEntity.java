@@ -1,15 +1,15 @@
-package com.smartAmor.model;
+package com.smartAmor.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
-public class AmorphousAlloys {
+public class AmorphousAlloysEntity {
     private String id;
     private String name;
     private String version;
 
     @JsonProperty("base_type_id")
-    private int baseTypeId;
+    private Integer baseTypeId;
 
     private String formula;
     private Properties properties;
@@ -20,6 +20,15 @@ public class AmorphousAlloys {
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
+    public AmorphousAlloysEntity() {
+    }
+
+    public AmorphousAlloysEntity(String name, Integer baseTypeId, String formula) {
+        this.name = name;
+        this.baseTypeId = baseTypeId;
+        this.formula = formula;
+    }
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -29,8 +38,8 @@ public class AmorphousAlloys {
     public String getVersion() { return version; }
     public void setVersion(String version) { this.version = version; }
 
-    public int getBaseTypeId() { return baseTypeId; }
-    public void setBaseTypeId(int baseTypeId) { this.baseTypeId = baseTypeId; }
+    public Integer getBaseTypeId() { return baseTypeId; }
+    public void setBaseTypeId(Integer baseTypeId) { this.baseTypeId = baseTypeId; }
 
     public String getFormula() { return formula; }
     public void setFormula(String formula) { this.formula = formula; }
@@ -43,4 +52,18 @@ public class AmorphousAlloys {
 
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    @Override
+    public String toString() {
+        return "AmorphousAlloysEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", version='" + version + '\'' +
+                ", baseTypeId=" + baseTypeId +
+                ", formula='" + formula + '\'' +
+                ", properties=" + properties +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.smartAmor.mapper;
 
-import com.smartAmor.model.AmorphousAlloys;
+import com.smartAmor.dto.AmorphousAlloysDTO;
+import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.typeHandler.PropertiesTypeHandler;
 import org.apache.ibatis.annotations.*;
 
@@ -12,22 +13,22 @@ public interface AmorphousAlloysMapper {
     @Results(id = "amorphousAlloysMap", value = {
             @Result(property = "properties", column = "properties", typeHandler = PropertiesTypeHandler.class)
     })
-    AmorphousAlloys selectById(String id);
+    AmorphousAlloysEntity selectById(String id);
 
-    int insert(AmorphousAlloys entity);
+    int insert(AmorphousAlloysEntity entity);
 
-    int update(AmorphousAlloys entity);
+    int update(AmorphousAlloysEntity entity);
 
     @Delete("DELETE FROM amorphous_alloys WHERE id = #{id}")
     int delete(String id);
 
     @ResultMap("amorphousAlloysMap")
     @Select("SELECT * FROM amorphous_alloys")
-    List<AmorphousAlloys> selectAll();
+    List<AmorphousAlloysEntity> selectAll();
 
     @ResultMap("amorphousAlloysMap")
     @Select("SELECT * FROM amorphous_alloys LIMIT #{size} OFFSET #{start}")
-    List<AmorphousAlloys> selectList(int start, int size);
+    List<AmorphousAlloysEntity> selectList(int start, int size);
 
 
     @Select("SELECT COUNT(*) > 0 FROM amorphous_alloys WHERE id = #{id}")
@@ -35,4 +36,6 @@ public interface AmorphousAlloysMapper {
 
     @Select("SELECT COUNT(*) FROM amorphous_alloys")
     int getCount();
+
+    AmorphousAlloysDTO toDTO(AmorphousAlloysEntity alloys);
 }

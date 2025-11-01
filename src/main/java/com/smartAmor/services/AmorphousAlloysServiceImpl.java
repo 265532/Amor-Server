@@ -2,8 +2,8 @@ package com.smartAmor.services;
 
 import com.smartAmor.mapper.AmorphousAlloysMapper;
 import com.smartAmor.mapper.BaseTypesMapper;
-import com.smartAmor.model.AmorphousAlloys;
-import com.smartAmor.model.Properties;
+import com.smartAmor.entity.AmorphousAlloysEntity;
+import com.smartAmor.entity.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +22,18 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     private BaseTypesMapper baseTypesMapper;
 
     @Override
-    public AmorphousAlloys getInfoById(String id) {
+    public AmorphousAlloysEntity getInfoById(String id) {
         return amorphousAlloysMapper.selectById(id);
     }
 
     @Override
-    public List<AmorphousAlloys> selectList(int start, int size) {
+    public List<AmorphousAlloysEntity> selectList(int start, int size) {
         return amorphousAlloysMapper.selectList(start, size);
     }
 
     @Override
     @Transactional
-    public AmorphousAlloys create(AmorphousAlloys amorphousAlloys) {
+    public AmorphousAlloysEntity create(AmorphousAlloysEntity amorphousAlloys) {
         // 验证基体类型是否存在
         int baseTypeId = amorphousAlloys.getBaseTypeId();
         String amorphousAlloysID = amorphousAlloys.getId();
@@ -75,11 +75,11 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
 
     @Override
     @Transactional
-    public AmorphousAlloys updateById(AmorphousAlloys amorphousAlloys) {
+    public AmorphousAlloysEntity updateById(AmorphousAlloysEntity amorphousAlloys) {
         String id = amorphousAlloys.getId();
 
         // 检查记录是否存在
-        AmorphousAlloys existing = amorphousAlloysMapper.selectById(id);
+        AmorphousAlloysEntity existing = amorphousAlloysMapper.selectById(id);
         if (existing == null) {
             throw new IllegalArgumentException("无效的ID: " + id);
         }

@@ -1,17 +1,17 @@
 package com.smartAmor.services;
 
-import com.smartAmor.model.AmorphousAlloys;
+import com.smartAmor.entity.AmorphousAlloysEntity;
 
 import java.util.List;
 
 public interface AmorphousAlloysService {
-    List<AmorphousAlloys> selectList(int page, int size);
+    List<AmorphousAlloysEntity> selectList(int page, int size);
 
-    AmorphousAlloys getInfoById(String id);
+    AmorphousAlloysEntity getInfoById(String id);
 
-    AmorphousAlloys create(AmorphousAlloys amorphousAlloys);
+    AmorphousAlloysEntity create(AmorphousAlloysEntity amorphousAlloys);
 
-    AmorphousAlloys updateById(AmorphousAlloys amorphousAlloys);
+    AmorphousAlloysEntity updateById(AmorphousAlloysEntity amorphousAlloys);
 
     void deleteById(String id);
 

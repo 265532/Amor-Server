@@ -1,4 +1,4 @@
-package com.smartAmor.model;
+package com.smartAmor.entity;
 
 import java.time.LocalDateTime;
 

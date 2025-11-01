@@ -1,6 +1,6 @@
 package com.smartAmor.mapper;
 
-import com.smartAmor.model.BaseTypes;
+import com.smartAmor.entity.BaseTypes;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
