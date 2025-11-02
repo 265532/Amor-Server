@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("amorphous_alloys")
+@TableName(value = "amorphous_alloys", autoResultMap = true)
 public class AmorphousAlloysEntity {
     private String id;
     private String name;
@@ -28,17 +28,5 @@ public class AmorphousAlloysEntity {
 
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
-
-    public Object getHardness() {
-        return properties != null ? properties.getHardness() : null;
-    }
-
-    public Object getStrength() {
-        return properties != null ? properties.getStrength() : null;
-    }
-
-    public Object getCorrosionResistance() {
-        return properties != null ? properties.getCorrosionResistance() : null;
-    }
 
 }

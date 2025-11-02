@@ -1,9 +1,11 @@
 package com.smartAmor.controllers;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smartAmor.dto.AlloysFillter;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;
+import com.smartAmor.utils.NumberRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,16 +82,18 @@ public class AmorphousAlloysController {
         return ApiResponse.success("非晶合金删除成功", null);
     }
 
-    @GetMapping("/filter")
-    public ApiResponse<List<AmorphousAlloysEntity>> filterAmorphousAlloys(
-            @RequestParam(name = "name",required = false) String name,
-            @RequestParam(name = "hardness", required = false) Double hardness,
-            @RequestParam(name = "strength", required = false) Double strength,
-            @RequestParam(name = "corrosion_resistance", required = false) Double corrosion_resistance) {
-        logger.info("筛选非晶合金, hardness: {}, strength: {}, corrosion_resistance: {}",
-                hardness, strength, corrosion_resistance);
+    @PostMapping("/filter")
+    public ApiResponse<List<AmorphousAlloysEntity>> filterAmorphousAlloys(@Valid @RequestBody AlloysFillter body) {
+        String name = body.getName();
+        NumberRange hardness = body.getHardness();
+        NumberRange strength = body.getStrength();
+        Double corrosionResistance = body.getCorrosionResistance();
+
+        logger.info("筛选非晶合金, hardness: {}, strength: {}, corrosionResistance: {}",
+                hardness, strength, corrosionResistance);
         List<AmorphousAlloysEntity> result = amorphousAlloysService.filterByPropertiesWithName(
-                name,hardness, strength, corrosion_resistance);
+                name,hardness, strength, corrosionResistance);
         return ApiResponse.success("非晶合金筛选成功", result);
     }
+
 }

@@ -2,6 +2,7 @@ package com.smartAmor.services;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smartAmor.entity.AmorphousAlloysEntity;
+import com.smartAmor.utils.NumberRange;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface AmorphousAlloysService {
 
     int getCount();
 
-    List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, Double hardness, Double strength, Double corrosionResistance);
+    List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, NumberRange hardness, NumberRange strength, Double corrosionResistance);
 }

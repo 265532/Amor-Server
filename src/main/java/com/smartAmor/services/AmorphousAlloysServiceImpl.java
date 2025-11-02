@@ -2,10 +2,14 @@ package com.smartAmor.services;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smartAmor.controllers.AmorphousAlloysController;
 import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.mapper.AmorphousAlloysMapper;
 import com.smartAmor.mapper.BaseTypesMapper;
 import com.smartAmor.entity.AmorphousAlloysEntity;
+import com.smartAmor.utils.NumberRange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +19,7 @@ import java.util.List;
 
 @Service
 public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
+    private static final Logger logger = LoggerFactory.getLogger(AmorphousAlloysServiceImpl.class);
 
     @Autowired
     private AmorphousAlloysMapper amorphousAlloysMapper;
@@ -107,7 +112,14 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     }
 
     @Override
-    public List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, Double hardness, Double strength, Double corrosionResistance) {
+    public List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, NumberRange hardness, NumberRange strength, Double corrosionResistance) {
+        logger.info("查询参数 - name: {}, hardness: {}-{}, strength: {}-{}, corrosionResistance: {}",
+                name,
+                hardness != null ? hardness.getMin() : null,
+                hardness != null ? hardness.getMax() : null,
+                strength != null ? strength.getMin() : null,
+                strength != null ? strength.getMax() : null,
+                corrosionResistance);
         return amorphousAlloysMapper.selectByPropertiesWithName(
                 StringUtils.isNotBlank(name) ? name + "%" : null,
                 hardness, strength, corrosionResistance
