@@ -5,7 +5,7 @@
 <!--    &lt;!&ndash; 定义 resultMap &ndash;&gt;-->
 <!--    <resultMap id="AmorphousAlloysMap" type="com.smartAmor.entity.AmorphousAlloysEntity">-->
 <!--        <id column="id" property="id"/>-->
-<!--        <result column="name" property="name"/>-->
+<!--        <result column="baseTypeId" property="baseTypeId"/>-->
 <!--        <result column="version" property="version"/>-->
 <!--        <result column="base_type_id" property="baseTypeId"/>-->
 <!--        <result column="formula" property="formula"/>-->

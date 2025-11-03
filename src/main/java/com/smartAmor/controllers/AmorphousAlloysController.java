@@ -1,7 +1,7 @@
 package com.smartAmor.controllers;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smartAmor.dto.AlloysFillter;
+import com.smartAmor.dto.AlloysFilter;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;
@@ -46,11 +46,10 @@ public class AmorphousAlloysController {
 
     @GetMapping("/list")
     public ApiResponse<Page<AmorphousAlloysEntity>> getAmorphousAlloysWithPagination
-    (
-            @RequestParam(name = "startPage", defaultValue = "0") @PositiveOrZero(message = "页码不能为负数") int startPage,
-            @RequestParam(name = "size", defaultValue = "10") @Positive(message = "每页大小必须大于0") int size
-    )
-    {
+            (
+                    @RequestParam(name = "startPage", defaultValue = "0") @PositiveOrZero(message = "页码不能为负数") int startPage,
+                    @RequestParam(name = "size", defaultValue = "10") @Positive(message = "每页大小必须大于0") int size
+            ) {
         logger.info("分页查询非晶合金, startPage: {}, size: {}", startPage, size);
         Page<AmorphousAlloysEntity> result = amorphousAlloysService.selectListByPage(startPage, size);
         return ApiResponse.success("非晶合金列表获取成功", result);
@@ -83,8 +82,8 @@ public class AmorphousAlloysController {
     }
 
     @PostMapping("/filter")
-    public ApiResponse<List<AmorphousAlloysEntity>> filterAmorphousAlloys(@Valid @RequestBody AlloysFillter body) {
-        String name = body.getName();
+    public ApiResponse<List<AmorphousAlloysEntity>> filterAmorphousAlloys(@Valid @RequestBody AlloysFilter body) {
+        Integer baseTypeId = body.getBaseTypeId();
         NumberRange hardness = body.getHardness();
         NumberRange strength = body.getStrength();
         Double corrosionResistance = body.getCorrosionResistance();
@@ -92,7 +91,7 @@ public class AmorphousAlloysController {
         logger.info("筛选非晶合金, hardness: {}, strength: {}, corrosionResistance: {}",
                 hardness, strength, corrosionResistance);
         List<AmorphousAlloysEntity> result = amorphousAlloysService.filterByPropertiesWithName(
-                name,hardness, strength, corrosionResistance);
+                baseTypeId, hardness, strength, corrosionResistance);
         return ApiResponse.success("非晶合金筛选成功", result);
     }
 

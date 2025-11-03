@@ -21,8 +21,7 @@ public interface AmorphousAlloysMapper extends BaseMapper<AmorphousAlloysEntity>
 
     @Select("<script>" +
             "SELECT * FROM amorphous_alloys WHERE 1=1 " +
-            "<if test='name != null and name != \"\"'> AND name LIKE CONCAT(#{name}, '%') </if>" +
-            "<if test='hardness != null'>" +
+            "<if test='baseTypeId != null'> AND base_type_id = #{baseTypeId} </if>" + "<if test='hardness != null'>" +
             "<if test='hardness.min != null'> AND JSON_EXTRACT(properties, '$.hardness') &gt;= #{hardness.min} </if>" +
             "<if test='hardness.max != null'> AND JSON_EXTRACT(properties, '$.hardness') &lt;= #{hardness.max} </if>" +
             "</if>" +
@@ -36,7 +35,7 @@ public interface AmorphousAlloysMapper extends BaseMapper<AmorphousAlloysEntity>
     @Results({
             @Result(column = "properties", property = "properties", typeHandler = PropertiesTypeHandler.class)
     })
-    List<AmorphousAlloysEntity> selectByPropertiesWithName(@Param("name") String name,
+    List<AmorphousAlloysEntity> selectByPropertiesWithName(@Param("baseTypeId") Integer baseTypeId,
                                                            @Param("hardness") NumberRange hardness,
                                                            @Param("strength") NumberRange strength,
                                                            @Param("corrosionResistance") Double corrosionResistance);

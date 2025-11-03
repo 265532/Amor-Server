@@ -19,5 +19,5 @@ public interface AmorphousAlloysService {
 
     int getCount();
 
-    List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, NumberRange hardness, NumberRange strength, Double corrosionResistance);
+    List<AmorphousAlloysEntity> filterByPropertiesWithName(Integer baseTypeId, NumberRange hardness, NumberRange strength, Double corrosionResistance);
 }

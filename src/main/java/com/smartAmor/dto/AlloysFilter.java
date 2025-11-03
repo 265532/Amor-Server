@@ -4,8 +4,8 @@ import com.smartAmor.utils.NumberRange;
 import lombok.Data;
 
 @Data
-public class AlloysFillter {
-    String name;
+public class AlloysFilter {
+    Integer baseTypeId;
     NumberRange hardness;
     NumberRange strength;
     Double corrosionResistance;

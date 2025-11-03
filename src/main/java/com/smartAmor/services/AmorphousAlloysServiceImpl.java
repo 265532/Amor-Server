@@ -112,16 +112,16 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
     }
 
     @Override
-    public List<AmorphousAlloysEntity> filterByPropertiesWithName(String name, NumberRange hardness, NumberRange strength, Double corrosionResistance) {
-        logger.info("查询参数 - name: {}, hardness: {}-{}, strength: {}-{}, corrosionResistance: {}",
-                name,
+    public List<AmorphousAlloysEntity> filterByPropertiesWithName(Integer baseTypeId, NumberRange hardness, NumberRange strength, Double corrosionResistance) {
+        logger.info("查询参数 - baseTypeId: {}, hardness: {}-{}, strength: {}-{}, corrosionResistance: {}",
+                baseTypeId,
                 hardness != null ? hardness.getMin() : null,
                 hardness != null ? hardness.getMax() : null,
                 strength != null ? strength.getMin() : null,
                 strength != null ? strength.getMax() : null,
                 corrosionResistance);
         return amorphousAlloysMapper.selectByPropertiesWithName(
-                StringUtils.isNotBlank(name) ? name + "%" : null,
+                baseTypeId,
                 hardness, strength, corrosionResistance
         );
     }
