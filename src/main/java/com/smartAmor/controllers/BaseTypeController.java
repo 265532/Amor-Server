@@ -1,19 +1,16 @@
 package com.smartAmor.controllers;
 
 import com.smartAmor.entity.BaseTypesEntity;
-import com.smartAmor.services.AmorphousAlloysService;
-import com.smartAmor.services.BaseTypesService;
+import com.smartAmor.services.interfaces.BaseTypesService;
 import com.smartAmor.utils.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Validated

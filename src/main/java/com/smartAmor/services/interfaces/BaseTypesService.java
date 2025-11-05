@@ -1,4 +1,4 @@
-package com.smartAmor.services;
+package com.smartAmor.services.interfaces;
 
 import com.smartAmor.entity.BaseTypesEntity;
 

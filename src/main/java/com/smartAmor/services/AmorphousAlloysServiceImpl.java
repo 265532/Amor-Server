@@ -1,12 +1,11 @@
 package com.smartAmor.services;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smartAmor.controllers.AmorphousAlloysController;
 import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.mapper.AmorphousAlloysMapper;
 import com.smartAmor.mapper.BaseTypesMapper;
 import com.smartAmor.entity.AmorphousAlloysEntity;
+import com.smartAmor.services.interfaces.AmorphousAlloysService;
 import com.smartAmor.utils.NumberRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

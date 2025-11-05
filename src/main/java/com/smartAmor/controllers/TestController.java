@@ -2,16 +2,25 @@ package com.smartAmor.controllers;
 
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.entity.PropertiesEntity;
-import com.smartAmor.services.AmorphousAlloysService;
+import com.smartAmor.services.interfaces.AmorphousAlloysService;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+//@Validated
+//@RestController
+//@RequestMapping("/api/test")
 public class TestController {
     private final AmorphousAlloysService amorphousAlloysService;
 
     private static final List<String> RAW_DATA = List.of(
+            "Zr-Cu-Al | Zr₅₅Cu₃₀Al₁₅ | 1600 | 480 | 3.0",
+            "Zr-Cu-Ni-Al | Zr₅₂.₅Cu₁₇.₉Ni₁₄.₆Al₁₀ | 1650 | 500 | 3.5",
+            "Zr-Cu-Ti-Ni-Be | Zr₄₄Cu₁₂Ti₁₁Ni₁₀Be₂₃ | 1900 | 550 | 2.5",
+            "Zr-Cu-Al-Ni-Ti | Zr₅₀Cu₂₀Al₁₀Ni₁₀Ti₁₀ | 1700 | 520 | 3.2",
+            "Zr-Cu-Al-Ag | Zr₅₀Cu₃₀Al₁₀Ag₁₀ | 1580 | 470 | 4.0",
+            "Zr-Cu-Al-Co | Zr₅₅Cu₂₅Al₁₀Co₁₀ | 1620 | 490 | 3.8"
     );
 
     private static final String[] names = {
@@ -38,8 +47,8 @@ public class TestController {
             TestController.MaterialData data = materials.get(i);
             AmorphousAlloysEntity body = new AmorphousAlloysEntity();
             body.setId("AMA-" + String.format("%03d", (count + i) + 1));
-            body.setBaseTypeId(5);
-            body.setName("钯基非晶" + names[(int) (Math.random() * names.length)] + "合金");
+            body.setBaseTypeId(1);
+            body.setName("锆基非晶" + names[(int) (Math.random() * names.length)] + "合金");
             body.setVersion(versions[(int) (Math.random() * versions.length)] + "版 v" + String.format("%.1f", (Math.random() * 5 + 1)));
             body.setFormula(data.getFormula());
             body.setProperties(new PropertiesEntity(data.getHardness(), data.getStrength(), data.getCorrosion_resistance()));
@@ -55,11 +64,11 @@ public class TestController {
         private final double corrosion_resistance;
 
         public MaterialData(String name, String formula,
-                            double hardness, double strength, double corrosion_resistance) {
+                            double strength, double hardness, double corrosion_resistance) {
             this.name = name;
             this.formula = formula;
-            this.hardness = hardness;
             this.strength = strength;
+            this.hardness = hardness;
             this.corrosion_resistance = corrosion_resistance;
         }
 

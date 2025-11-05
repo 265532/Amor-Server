@@ -1,4 +1,4 @@
-package com.smartAmor.services;
+package com.smartAmor.services.interfaces;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smartAmor.entity.AmorphousAlloysEntity;

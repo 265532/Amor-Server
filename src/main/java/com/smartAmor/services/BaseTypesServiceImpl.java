@@ -2,6 +2,7 @@ package com.smartAmor.services;
 
 import com.smartAmor.entity.BaseTypesEntity;
 import com.smartAmor.mapper.BaseTypesMapper;
+import com.smartAmor.services.interfaces.BaseTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
