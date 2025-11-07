@@ -1,4 +1,4 @@
-package com.smartAmor.dto;
+package com.smartAmor.dto.response;
 
 import lombok.Data;
 

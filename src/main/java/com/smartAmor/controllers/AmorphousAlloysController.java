@@ -1,7 +1,7 @@
 package com.smartAmor.controllers;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smartAmor.dto.AlloysFilter;
+import com.smartAmor.dto.request.AlloysFilter;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.interfaces.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;

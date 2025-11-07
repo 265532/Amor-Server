@@ -1,4 +1,4 @@
-package com.smartAmor.dto;
+package com.smartAmor.dto.request;
 
 import com.smartAmor.utils.NumberRange;
 import lombok.Data;

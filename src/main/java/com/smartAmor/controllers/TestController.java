@@ -3,14 +3,24 @@ package com.smartAmor.controllers;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.services.interfaces.AmorphousAlloysService;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-//@Validated
-//@RestController
-//@RequestMapping("/api/test")
+@Validated
+@RestController
+@RequestMapping("/api/test")
 public class TestController {
     private final AmorphousAlloysService amorphousAlloysService;
 
@@ -120,5 +130,36 @@ public class TestController {
                 })
                 .filter(material -> material != null)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/stream")
+    public void testStream(String msg, HttpServletResponse response) {
+        System.out.println(msg);
+        response.setContentType("text/event-stream");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter writer = response.getWriter()) {
+            sendMessage(msg, writer);
+            writer.write("data:end\n\n");
+            writer.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendMessage(String content, PrintWriter writer) throws InterruptedException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("model", "deepseek-chat");
+
+        Map<String, String> message = new HashMap<>();
+        message.put("role", "user");
+        message.put("content", content);
+
+        List<Map> messages = new ArrayList<>();
+        messages.add(message);
+        params.put("messages", messages);
+        params.put("stream", true);
+
     }
 }
