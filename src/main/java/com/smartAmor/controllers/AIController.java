@@ -28,10 +28,10 @@ public class AIController {
     }
 
     /**
-     * 普通聊天接口
+     * 非流式接口
      */
-    @PostMapping("/chat")
-    public Mono<Map<String, Object>> chat(@RequestBody Map<String, String> request) {
+    @PostMapping("/recommend")
+    public Mono<Map<String, Object>> recommend(@RequestBody Map<String, String> request) {
         String message = request.get("message");
         String type = request.getOrDefault("type", "cloud"); // cloud 或 local
 
@@ -41,7 +41,22 @@ public class AIController {
 //        } else {
 //            response = aiService.chatCompletion(message);
 //        }
-        response = aiService.chatCompletion(message);
+        response = aiService.recommendCompletion(message);
+
+        return response.map(result -> Map.of(
+                "success", true,
+                "data", result,
+                "timestamp", System.currentTimeMillis()
+        ));
+    }
+
+    @PostMapping("/optimize")
+    public Mono<Map<String, Object>> optimize(@RequestBody Map<String, String> request) {
+        String message = request.get("message");
+        String type = request.getOrDefault("type", "cloud"); // cloud 或 local
+
+        Mono<String> response;
+        response = aiService.optimizeCompletion(message);
 
         return response.map(result -> Map.of(
                 "success", true,
@@ -51,7 +66,7 @@ public class AIController {
     }
 
     /**
-     * 流式聊天接口（SSE）
+     * 流式接口（SSE）
      */
     @GetMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<String>> streamChat(
