@@ -6,16 +6,6 @@ import com.smartAmor.entity.OperatorEntity;
 import javax.validation.Valid;
 import java.util.List;
 
-public interface OperatorService {
-    OperatorEntity getInfoById(int id);
+public interface OperatorService extends BaseService {
 
-    List<OperatorEntity> getAll();
-
-    Page<OperatorEntity> getListByPage(int startPage, int size);
-
-    OperatorEntity create(@Valid OperatorEntity body);
-
-    OperatorEntity update(@Valid OperatorEntity body);
-
-    void delete(int id);
 }
