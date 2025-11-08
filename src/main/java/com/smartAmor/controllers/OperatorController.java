@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Validated
@@ -23,7 +24,7 @@ public class OperatorController {
 
     @GetMapping("/{id}")
     public ApiResponse<OperatorEntity> getOperatorById(
-            @PathVariable("id") int id) {
+            @PathVariable("id") Long id) {
         log.info("根据ID查询操作员: {}", id);
         OperatorEntity result = OperatorService.getInfoById(id);
         if (result == null) return ApiResponse.notFound("操作员不存在");
@@ -49,9 +50,14 @@ public class OperatorController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<OperatorEntity> createOperator(@Valid @RequestBody OperatorEntity body) {
-        log.info("创建操作员: {}", body);
-        OperatorEntity result = OperatorService.create(body);
-        return ApiResponse.success("操作员创建成功", result);
+        try {
+            log.info("创建操作员: {}", body);
+            int result = OperatorService.create(body);
+            OperatorEntity createdOperator = OperatorService.getInfoByEmployeeId(body.getEmployeeId());
+            return ApiResponse.success("操作员创建成功", createdOperator);
+        }catch (Exception e){
+            return ApiResponse.error("操作员创建失败");
+        }
     }
 
     @PutMapping("/update")
@@ -62,9 +68,13 @@ public class OperatorController {
     }
 
     @DeleteMapping("/delete")
-    public ApiResponse<Void> deleteOperator(@RequestParam("id") int id) {
-        log.info("删除操作员: {}", id);
-        OperatorService.delete(id);
-        return ApiResponse.success("操作员删除成功");
+    public ApiResponse<Integer> deleteOperator(@RequestParam("id") Long id) {
+       try{
+           log.info("删除操作员: {}", id);
+           int result = OperatorService.delete(id);
+           return ApiResponse.success("操作员删除成功",result);
+       }catch (Exception e){
+           return ApiResponse.error("操作员删除失败");
+       }
     }
 }
