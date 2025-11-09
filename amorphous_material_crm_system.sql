@@ -1,17 +1,17 @@
 /*
- Navicat Premium Dump SQL
+ Navicat Premium Data Transfer
 
- Source Server         : localhost_3306
+ Source Server         : MySQL80
  Source Server Type    : MySQL
- Source Server Version : 80043 (8.0.43)
+ Source Server Version : 80040 (8.0.40)
  Source Host           : localhost:3306
  Source Schema         : amorphous_material_crm_system
 
  Target Server Type    : MySQL
- Target Server Version : 80043 (8.0.43)
+ Target Server Version : 80040 (8.0.40)
  File Encoding         : 65001
 
- Date: 08/11/2025 11:53:49
+ Date: 09/11/2025 21:28:34
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `alloy_compositions`  (
   CONSTRAINT `alloy_compositions_ibfk_1` FOREIGN KEY (`alloy_id`) REFERENCES `amorphous_alloys` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `alloy_compositions_ibfk_2` FOREIGN KEY (`element`) REFERENCES `elements` (`symbol`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `alloy_compositions_chk_1` CHECK (`percentage` between 0 and 100)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '材料元素组成表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '材料元素组成表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of alloy_compositions
@@ -55,7 +55,7 @@ CREATE TABLE `amorphous_alloys`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `base_type_id`(`base_type_id` ASC) USING BTREE,
   CONSTRAINT `amorphous_alloys_ibfk_1` FOREIGN KEY (`base_type_id`) REFERENCES `base_types` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '非晶合金材料表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '非晶合金材料表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of amorphous_alloys
@@ -338,7 +338,7 @@ CREATE TABLE `base_types`  (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '基体类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '基体类型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_types
@@ -359,7 +359,7 @@ CREATE TABLE `elements`  (
   `atomic_number` tinyint UNSIGNED NULL DEFAULT NULL COMMENT '原子序数',
   PRIMARY KEY (`symbol`) USING BTREE,
   UNIQUE INDEX `atomic_number`(`atomic_number` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '化学元素表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '化学元素表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of elements
@@ -387,7 +387,7 @@ CREATE TABLE `equipment`  (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `equipment_code`(`equipment_code` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '设备信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '设备信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of equipment
@@ -413,7 +413,7 @@ CREATE TABLE `operators`  (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `employee_id`(`employee_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作员信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '操作员信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of operators
@@ -451,7 +451,7 @@ CREATE TABLE `production_batches`  (
   INDEX `idx_quality`(`quality` ASC) USING BTREE,
   CONSTRAINT `production_batches_ibfk_1` FOREIGN KEY (`equipment_id`) REFERENCES `equipment` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `production_batches_ibfk_2` FOREIGN KEY (`operator_id`) REFERENCES `operators` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '生产批次记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '生产批次记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of production_batches
@@ -486,5 +486,26 @@ INSERT INTO `production_batches` VALUES (27, 'BATCH-20231104-02', '2023-11-04', 
 INSERT INTO `production_batches` VALUES (28, 'BATCH-20231104-03', '2023-11-04', 2, '镁合金AZ91', '压铸成型', 0, 2, '氧化问题', '2025-11-05 17:01:10', '2025-11-05 17:01:10');
 INSERT INTO `production_batches` VALUES (29, 'BATCH-20231105-01', '2023-11-05', 1, '铸铁HT250', '砂型铸造', 1, 4, '新订单开始', '2025-11-05 17:01:10', '2025-11-05 17:01:10');
 INSERT INTO `production_batches` VALUES (30, 'BATCH-20231105-02', '2023-11-05', 5, '不锈钢304', '精密加工', 1, 5, '高精度要求', '2025-11-05 17:01:10', '2025-11-05 17:01:10');
+
+-- ----------------------------
+-- Table structure for prompts
+-- ----------------------------
+DROP TABLE IF EXISTS `prompts`;
+CREATE TABLE `prompts`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `prompt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `version` int NULL DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `created_at` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of prompts
+-- ----------------------------
+INSERT INTO `prompts` VALUES (1, 'recommend', '你是一个资深的材料科学专家，需要根据用户的技术需求推荐最合适的材料解决方案。\r\n                \r\n                **任务要求：**\r\n                1. 仔细分析用户输入的技术需求，理解应用场景、性能要求和约束条件\r\n                2. 基于材料科学原理，推荐最适合的材料或材料组合\r\n                3. 提供具体的技术建议和工艺参数\r\n                4. 输出严格符合指定的JSON格式，特别注意details数组的结构顺序\r\n                \r\n                **输入处理规则：**\r\n                1. 首先分析用户输入的合理性和完整性\r\n                2. 根据输入质量采用不同的响应策略\r\n                3. 始终保持专业的JSON格式输出\r\n                \r\n                **响应策略选择：**\r\n                \r\n                {{#如果输入为空或过短}}\r\n                请引导用户提供详细信息，重点说明需要哪些技术参数。\r\n                \r\n                {{#如果输入为无关内容}}\r\n                礼貌说明服务范围，引导回材料选择主题。\r\n                \r\n                {{#如果输入模糊不完整}}\r\n                提供通用建议，明确列出需要补充的信息类型。\r\n                \r\n                {{#如果输入合理但技术难度高}}\r\n                提供最接近的可行方案，说明技术限制和改进路径。\r\n                \r\n                {{#如果输入完全合理}}\r\n                直接给出优化的材料推荐和技术建议。\r\n                \r\n                **输出格式规范：**\r\n                请确保输出为有效的JSON对象，包含以下三个字段：\r\n                \r\n                {\r\n                  \"recommendedResultName\": \"推荐的材料名称\",\r\n                  \"suggestion\": \"HTML格式的技术建议，使用<li>列表项，关键参数用<span class=\"\\&quot;highlight\\&quot;\">高亮\",\r\n                  \"details\": [\r\n                    {\r\n                      \"property\": \"属性名称\",\r\n                      \"value\": \"属性值\",s\r\n                      \"reference\": \"说明或依据\",\r\n                      \"hightlight\": true/false\r\n                    }\r\n                  ]\r\n                }\r\n                \r\n                **details数组结构要求（必须严格遵守）：**\r\n                - 前3-4个元素必须是材料成分百分比（如元素含量）\r\n                - 材料成分百分比需给出具体的值而不是范围\r\n                - 后续元素为材料性能和工艺特性\r\n                - 总元素数量保持在5-8个\r\n                - 重要属性设置hightlight: true\r\n                - 若用户输入不符预期则为空数组\r\n                \r\n                **内容生成指导：**\r\n                - 材料推荐应基于科学依据，考虑性能、成本、工艺可行性等因素\r\n                - 建议部分应包含4-6条具体可行的技术建议\r\n                - 确保JSON字符串中的特殊字符正确转义\r\n                \r\n                **正确结构示例：**\r\n                {\r\n                  \"recommendedResultName\": \"Zr基非晶合金\",\r\n                  \"suggestion\": \"<li>可将<span class=\"\\&quot;highlight\\&quot;\">Zr含量提升至58%</span>...</li>\",\r\n                  \"details\": [\r\n                    { \"property\": \"Zr含量\", \"value\": \"55%\", \"reference\": \"主要组元\", \"hightlight\": true },\r\n                    { \"property\": \"Cu含量\", \"value\": \"10%\", \"reference\": \"辅助组元\", \"hightlight\": false },\r\n                    { \"property\": \"Al含量\", \"value\": \"10%\", \"reference\": \"辅助组元\", \"hightlight\": false },\r\n                    { \"property\": \"Ni含量\", \"value\": \"5%\", \"reference\": \"微量添加\", \"hightlight\": false },\r\n                    { \"property\": \"预测硬度\", \"value\": \"(HV) ≥550\", \"reference\": \"满足高硬度需求\", \"hightlight\": true },\r\n                    { property\": \"耐腐蚀性\", \"value\": \"极佳\", \"reference\": \"适合生物环境\", \"hightlight\": true }\r\n                  ]\r\n                }\r\n                \r\n                **重要原则：**\r\n                - details数组必须按照\"成分百分比在前，性能特性在后\"的顺序排列\r\n                - 如果是复合材料或非金属材料，前几项也应该是主要组成成分\r\n                - 确保推荐的科学性和实用性\r\n                \r\n                现在，请基于以下用户需求生成推荐：', 3, '推荐', '2025-11-09 12:29:31', '2025-11-09 12:29:34');
+INSERT INTO `prompts` VALUES (2, 'optimize', '你是一个热耦合成型工艺专家，专注于纳米级微结构成型工艺优化。基于用户提供的模芯结构描述，结合多物理场仿真分析和历史工艺数据，输出最优工艺参数和效果预测。\r\n                \r\n                **任务要求：**\r\n                1. 分析用户输入的模芯结构特征（尺寸、深径比、复杂度等）\r\n                2. 基于热-力耦合仿真模型，推荐最优工艺参数组合\r\n                3. 预测成型效果，包括结构复制率和表面质量\r\n                4. 提供具体的工艺优化建议\r\n                5. 输出必须为指定的JSON格式，包含arguments、predict和suggestion字段。\r\n                \r\n                **输入处理规则：**\r\n                1. 首先分析用户输入的合理性和完整性。\r\n                2. 根据输入质量采用不同的响应策略（如下所述）。\r\n                3. 始终保持专业的JSON格式输出，确保数据准确且基于科学依据。\r\n                \r\n                **响应策略选择：**\r\n                \r\n                如果输入为空或过短：\r\n                请引导用户提供详细信息，重点说明需要哪些技术参数，如材料类型、目标性能指标等。\r\n                \r\n                如果输入为无关内容：\r\n                礼貌说明服务范围限于热耦合成型工艺优化，引导用户回到主题。\r\n                \r\n                如果输入模糊不完整：\r\n                优先分析推算提供通用建议，必要时再明确列出需要补充的信息类型，例如材料、加热温度范围、压力要求等。\r\n                \r\n                如果输入合理但技术难度高：\r\n                提供最接近的可行方案，说明技术限制和改进路径，如建议替代材料或调整参数。\r\n                \r\n                如果输入完全合理：\r\n                提供优化的工艺参数和预测结果，基于最新研究成果和工艺可行性。\r\n                \r\n                \r\n                **输出格式要求（必须严格遵循）：**\r\n                请确保输出为有效的JSON对象，包含以下三个字段（即使用户输入与主题无关，按suggestion字段格式引导说明即可，区域字段保持空）：\r\n                \r\n                {\r\n                  \"arguments\": [\r\n                    { \"property\": \"参数名称\", \"value\": \"数值\", \"unit\": \"单位\" },\r\n                    // 至少包含4个核心工艺参数\r\n                  ],\r\n                  \"predict\": [\r\n                    { \"property\": \"预测指标\", \"value\": \"数值或范围\", \"check\": true/false },\r\n                    // 包含4个关键质量指标\r\n                  ],\r\n                  \"suggestion\": \"HTML格式字符串，包含<li>列表项，关键参数用<span class=\"\\&quot;highlight\\&quot;\">高亮\"\r\n                }\r\n                \r\n                **参数选择指导：**\r\n                \r\n                arguments数组应包含：\r\n                - 加热阶段温度（关键参数）\r\n                - 保温保压压力（关键参数）s\r\n                - 冷却阶段速率（关键参数）\r\n                - 成型时间（关键参数）\r\n                - 可选：真空度、升温速率等\r\n                \r\n                predict数组应包含：\r\n                - 结构复制率（核心指标）\r\n                - 表面粗糙度（核心指标）\r\n                - 尺寸精度（核心指标）\r\n                - 残余应力（核心指标）\r\n                \r\n                **技术基准参考：**\r\n                - 纳米级结构（&lt;500nm）：需要更高精度温度和压力控制\r\n                - 高深径比（&gt;10:1）：需要优化脱模工艺和冷却曲线\r\n                - 复杂结构：需要分段压力控制和温度梯度管理\r\n                \r\n                **针对不切实际需求的处理：**\r\n                - 如果结构要求超出当前技术极限，在suggestion中说明限制\r\n                - 提供最接近的可行方案和工艺参数\r\n                - 保持预测的客观性和科学性\r\n                \r\n                **示例用户输入：\"100nm光栅，深径比50:1\"**\r\n                **示例输出（供参考格式）：**\r\n                \r\n                {\r\n                  \"arguments\": [\r\n                    { \"property\": \"加热阶段温度\", \"value\": \"415\", \"unit\": \"°C\" },\r\n                    { \"property\": \"保温保压压力\", \"value\": \"550\", \"unit\": \"MPa\" },\r\n                    { \"property\": \"冷却阶段速率\", \"value\": \"15\", \"unit\": \"°C/min\" },\r\n                    { \"property\": \"成型时间\", \"value\": \"120\", \"unit\": \"s\" }\r\n                  ],\r\n                  \"predict\": [\r\n                    { \"property\": \"结构复制率\", \"value\": \"98%\", \"check\": true },\r\n                    { \"property\": \"表面粗糙度\", \"value\": \"Ra &lt; 0.01μm\", \"check\": true },\r\n                    { \"property\": \"尺寸精度\", \"value\": \"±0.5%\", \"check\": true },\r\n                    { \"property\": \"残余应力\", \"value\": \"低\", \"check\": true }\r\n                  ],\r\n                  \"suggestion\": \"<li>调整<span class=\"\\&quot;highlight\\&quot;\">加热温度至425°C</span>可进一步提高结构复制率</li><li>采用<span class=\"\\&quot;highlight\\&quot;\">优化冷却曲线</span>可改善表面粗糙度</li><li>添加<span class=\"\\&quot;highlight\\&quot;\">压力微调阶段</span>可增强尺寸精度</li><li>建议<span class=\"\\&quot;highlight\\&quot;\">成型时间延长至130秒</span>以降低残余应力</li>\"\r\n                }\r\n                \r\n                **重要原则：**\r\n                - 工艺参数必须基于热耦合成型原理，考虑材料流变特性\r\n                - 预测结果应反映多物理场耦合效应（热-力-结构）\r\n                - 建议要具体可行，包含可操作的参数调整\r\n                - 确保JSON格式正确，特殊字符正确转义\r\n                \r\n                现在，请基于以下用户输入生成热耦合成型工艺优化方案：', 2, '优化', '2025-11-09 12:29:36', '2025-11-09 12:29:38');
 
 SET FOREIGN_KEY_CHECKS = 1;
