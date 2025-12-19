@@ -6,9 +6,8 @@ import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.interfaces.AmorphousAlloysService;
 import com.smartAmor.utils.ApiResponse;
 import com.smartAmor.utils.NumberRange;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +20,12 @@ import java.util.List;
 
 @Validated
 @RestController
+@Slf4j
 @RequestMapping("/api/amorphous_alloys")
 public class AmorphousAlloysController {
-    private static final Logger logger = LoggerFactory.getLogger(AmorphousAlloysController.class);
 
     private final AmorphousAlloysService amorphousAlloysService;
 
-    @Autowired
     public AmorphousAlloysController(AmorphousAlloysService amorphousAlloysService) {
         this.amorphousAlloysService = amorphousAlloysService;
     }
@@ -35,7 +33,7 @@ public class AmorphousAlloysController {
     @GetMapping("/{id}")
     public ApiResponse<AmorphousAlloysEntity> getAmorphousAlloyById(
             @PathVariable("id") @NotBlank String id) {
-        logger.info("根据ID查询非晶合金: {}", id);
+        log.info("根据ID查询非晶合金: {}", id);
         AmorphousAlloysEntity result = amorphousAlloysService.getInfoById(id);
         if (result == null) {
             return ApiResponse.notFound("非晶合金不存在");
@@ -50,7 +48,7 @@ public class AmorphousAlloysController {
                     @RequestParam(name = "startPage", defaultValue = "0") @PositiveOrZero(message = "页码不能为负数") int startPage,
                     @RequestParam(name = "size", defaultValue = "10") @Positive(message = "每页大小必须大于0") int size
             ) {
-        logger.info("分页查询非晶合金, startPage: {}, size: {}", startPage, size);
+        log.info("分页查询非晶合金, startPage: {}, size: {}", startPage, size);
         Page<AmorphousAlloysEntity> result = amorphousAlloysService.selectListByPage(startPage, size);
         return ApiResponse.success("非晶合金列表获取成功", result);
     }
@@ -58,7 +56,7 @@ public class AmorphousAlloysController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<AmorphousAlloysEntity> createAmorphousAlloy(@Valid @RequestBody AmorphousAlloysEntity body) {
-        logger.info("创建非晶合金: {}", body);
+        log.info("创建非晶合金: {}", body);
         AmorphousAlloysEntity result = amorphousAlloysService.create(body);
         return ApiResponse.success("非晶合金创建成功", result);
     }
@@ -67,7 +65,7 @@ public class AmorphousAlloysController {
     public ApiResponse<AmorphousAlloysEntity> updateAmorphousAlloy(
             @PathVariable("id") @NotBlank(message = "ID不能为空") String id,
             @Valid @RequestBody AmorphousAlloysEntity body) {
-        logger.info("更新非晶合金, ID: {}, 数据: {}", id, body);
+        log.info("更新非晶合金, ID: {}, 数据: {}", id, body);
         body.setId(id); // 确保ID一致性
         AmorphousAlloysEntity result = amorphousAlloysService.updateById(body);
         return ApiResponse.success("非晶合金更新成功", result);
@@ -76,7 +74,7 @@ public class AmorphousAlloysController {
     @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteAmorphousAlloy(
             @PathVariable("id") @NotBlank(message = "ID不能为空") String id) {
-        logger.info("删除非晶合金: {}", id);
+        log.info("删除非晶合金: {}", id);
         amorphousAlloysService.deleteById(id);
         return ApiResponse.success("非晶合金删除成功", null);
     }
@@ -88,7 +86,7 @@ public class AmorphousAlloysController {
         NumberRange strength = body.getStrength();
         Double corrosionResistance = body.getCorrosionResistance();
 
-        logger.info("筛选非晶合金, hardness: {}, strength: {}, corrosionResistance: {}",
+        log.info("筛选非晶合金, hardness: {}, strength: {}, corrosionResistance: {}",
                 hardness, strength, corrosionResistance);
         List<AmorphousAlloysEntity> result = amorphousAlloysService.filterByPropertiesWithName(
                 baseTypeId, hardness, strength, corrosionResistance);

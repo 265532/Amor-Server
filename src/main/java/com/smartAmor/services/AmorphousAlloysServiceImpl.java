@@ -7,8 +7,8 @@ import com.smartAmor.mapper.BaseTypesMapper;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.services.interfaces.AmorphousAlloysService;
 import com.smartAmor.utils.NumberRange;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
-    private static final Logger logger = LoggerFactory.getLogger(AmorphousAlloysServiceImpl.class);
 
     @Autowired
     private AmorphousAlloysMapper amorphousAlloysMapper;
@@ -61,9 +61,9 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
 
         // 验证属性值
         PropertiesEntity props = amorphousAlloysEntity.getProperties();
-        if (props.getHardness() <= 0 ||
-                props.getStrength() <= 0 ||
-                props.getCorrosionResistance() <= 0) {
+        if (props.getHardness() <= 0
+                || props.getStrength() <= 0
+                || props.getCorrosionResistance() <= 0) {
             throw new IllegalArgumentException("Property values must be positive");
         }
 
@@ -112,7 +112,7 @@ public class AmorphousAlloysServiceImpl implements AmorphousAlloysService {
 
     @Override
     public List<AmorphousAlloysEntity> filterByPropertiesWithName(Integer baseTypeId, NumberRange hardness, NumberRange strength, Double corrosionResistance) {
-        logger.info("查询参数 - baseTypeId: {}, hardness: {}-{}, strength: {}-{}, corrosionResistance: {}",
+        log.info("查询参数 - baseTypeId: {}, hardness: {}-{}, strength: {}-{}, corrosionResistance: {}",
                 baseTypeId,
                 hardness != null ? hardness.getMin() : null,
                 hardness != null ? hardness.getMax() : null,

@@ -1,11 +1,20 @@
 package com.smartAmor.utils;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 public class ApiResponse<T> {
+    @Getter
+    @Setter
     private int status;
+    @Getter
+    @Setter
     private String message;
+    @Getter
+    @Setter
     private T data;
+    @Getter
     private long timestamp;
 
     private ApiResponse(int status, String message, T data) {
@@ -68,24 +77,5 @@ public class ApiResponse<T> {
     // 服务器内部错误
     public static <T> ApiResponse<T> internalError(String message) {
         return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, null);
-    }
-
-    // Getters
-    public int getStatus() { return status; }
-    public String getMessage() { return message; }
-    public T getData() { return data; }
-    public long getTimestamp() { return timestamp; }
-
-    // Setters（可根据需要设置为private或删除setter）
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

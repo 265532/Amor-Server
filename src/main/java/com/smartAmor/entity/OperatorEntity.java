@@ -3,6 +3,7 @@ package com.smartAmor.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  * 对应表：operators
  */
 @Data
+@NoArgsConstructor
 @TableName("operators")
 public class OperatorEntity {
     // Getter和Setter方法
@@ -55,10 +57,6 @@ public class OperatorEntity {
      */
     private LocalDateTime updatedAt;
 
-    // 构造方法
-    public OperatorEntity() {
-    }
-
     public OperatorEntity(Integer id, String name, String employeeId, String department,
                           String position, Integer status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -73,15 +71,15 @@ public class OperatorEntity {
 
     @Override
     public String toString() {
-        return "Operator{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", employeeId='" + employeeId + '\'' +
-                ", department='" + department + '\'' +
-                ", position='" + position + '\'' +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return "Operator{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", employeeId='" + employeeId + '\''
+                + ", department='" + department + '\''
+                + ", position='" + position + '\''
+                + ", status=" + status
+                + ", createdAt=" + createdAt
+                + ", updatedAt=" + updatedAt
+                + '}';
     }
 }

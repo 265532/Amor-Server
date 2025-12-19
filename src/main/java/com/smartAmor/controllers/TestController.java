@@ -3,6 +3,7 @@ package com.smartAmor.controllers;
 import com.smartAmor.entity.AmorphousAlloysEntity;
 import com.smartAmor.entity.PropertiesEntity;
 import com.smartAmor.services.interfaces.AmorphousAlloysService;
+import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,10 +68,15 @@ public class TestController {
     }
 
     static class MaterialData {
+        @Getter
         private final String name;
+        @Getter
         private final String formula;
+        @Getter
         private final double hardness;
+        @Getter
         private final double strength;
+        @Getter
         private final double corrosion_resistance;
 
         public MaterialData(String name, String formula,
@@ -91,26 +97,6 @@ public class TestController {
                     strength,
                     corrosion_resistance
             };
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getFormula() {
-            return formula;
-        }
-
-        public double getHardness() {
-            return hardness;
-        }
-
-        public double getStrength() {
-            return strength;
-        }
-
-        public double getCorrosion_resistance() {
-            return corrosion_resistance;
         }
     }
 

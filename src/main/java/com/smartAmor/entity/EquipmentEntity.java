@@ -2,6 +2,7 @@ package com.smartAmor.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  * 对应表：equipment
  */
 @Data
+@NoArgsConstructor
 @TableName("equipment")
 public class EquipmentEntity {
     // Getter和Setter方法
@@ -75,10 +77,6 @@ public class EquipmentEntity {
      */
     private LocalDateTime updatedAt;
 
-    // 构造方法
-    public EquipmentEntity() {
-    }
-
     public EquipmentEntity(Integer id, String equipmentCode, String equipmentName, String equipmentType,
                      BigDecimal temperature, BigDecimal pressure, Integer status, String manufacturer,
                      LocalDate purchaseDate, LocalDate lastMaintenanceDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -98,19 +96,19 @@ public class EquipmentEntity {
 
     @Override
     public String toString() {
-        return "Equipment{" +
-                "id=" + id +
-                ", equipmentCode='" + equipmentCode + '\'' +
-                ", equipmentName='" + equipmentName + '\'' +
-                ", equipmentType='" + equipmentType + '\'' +
-                ", temperature=" + temperature +
-                ", pressure=" + pressure +
-                ", status=" + status +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", purchaseDate=" + purchaseDate +
-                ", lastMaintenanceDate=" + lastMaintenanceDate +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return "Equipment{"
+                + "id=" + id
+                + ", equipmentCode='" + equipmentCode + '\''
+                + ", equipmentName='" + equipmentName + '\''
+                + ", equipmentType='" + equipmentType + '\''
+                + ", temperature=" + temperature
+                + ", pressure=" + pressure
+                + ", status=" + status
+                + ", manufacturer='" + manufacturer + '\''
+                + ", purchaseDate=" + purchaseDate
+                + ", lastMaintenanceDate=" + lastMaintenanceDate
+                + ", createdAt=" + createdAt
+                + ", updatedAt=" + updatedAt
+                + '}';
     }
 }
